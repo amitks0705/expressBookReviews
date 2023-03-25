@@ -7,6 +7,17 @@ let users = [];
 
 const isValid = (username)=>{ //returns boolean
 //write code to check is the username is valid
+    console.log("Number of users: " + users.length);
+    console.log("username to check validity" + username);
+    let userswithsamename = users.filter((user)=>{
+        console.log("isValid filter userame : " + user.userName);
+        return user.userName === username
+    });
+    if(userswithsamename.length > 0){
+        return true;
+    } else {
+        return false;
+    }   
 }
 
 const authenticatedUser = (username,password)=>{ //returns boolean
