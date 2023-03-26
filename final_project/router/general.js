@@ -17,9 +17,47 @@ public_users.post("/register", (req,res) => {
   });
   
 
+
+ const methCall = new Promise((resolve,reject)=>{
+    try {
+      const book_list = JSON.stringify(books, null, 4)
+      resolve(book_list);
+    } catch(err) {
+      reject(err)
+    }
+});
+
+// Get the book list available in the shop
+/*
+public_users.get('/',function (req, res) {
+    methCall.then(
+        (book_list) => res.send(book_list),
+        (err) => console.log("Error reading file") 
+      );
+      
+});
+*/
+
+async function myDisplay(req, res) {
+    let myPromise = new Promise(function(resolve, reject) {
+        try {
+            const book_db = JSON.stringify(books, null, 4)
+            resolve(book_db);
+         } catch(err) {
+            reject(err)
+        }
+    });
+    let book_list = await myPromise;  
+    if (book_list) 
+        res.send(book_list) 
+    else 
+        res.status(300).json({message: "No book found"});
+  }
+
+
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
-    return res.send(JSON.stringify(books, null, 4));
+     myDisplay(req, res);
 });
   
   // Get book details based on ISBN
